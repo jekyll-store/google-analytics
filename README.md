@@ -1,4 +1,4 @@
-# Jekll-Store/Google-Analytics
+# Jekyll-Store/Google-Analytics
 
 [![Build Status](https://travis-ci.org/jekyll-store/google-analytics.svg?branch=master)](https://travis-ci.org/jekyll-store/google-analytics)
 
