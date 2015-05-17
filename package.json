@@ -1,7 +1,7 @@
 {
   "name": "jekyll-store-google-analytics",
   "main": "./src/JekyllStoreGoogleAnalytics.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Google analytics plugin for Jekyll-Store Engine",
   "repository": {
     "type": "git",
@@ -9,9 +9,9 @@
   },
   "dependencies": {
     "big.js": "^3.0.1",
-    "immutable": "^3.6.4",
     "reflux": "^0.2.7",
-    "ga-browser": "^1.0.0"
+    "ga-browser": "^1.0.0",
+    "seamless-immutable": "^2.3.2"
   },
   "devDependencies": {
     "chai": "^2.1.2",
@@ -19,7 +19,7 @@
     "sinon": "^1.14.1"
   },
   "peerDependencies": {
-    "jekyll-store-engine": ">=0.1.3"
+    "jekyll-store-engine": ">=0.2.0"
   },
   "scripts": {
     "test": "mocha"

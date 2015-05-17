@@ -1,29 +1,28 @@
 var assert = require('chai').assert;
 var sinon = require('sinon');
-var I = require('immutable');
+var I = require('seamless-immutable');
 var B = require('big.js');
-var GoogleAnalyticsStore = require('../src/GoogleAnalyticsStore');
+var s = require('../src/GoogleAnalyticsStore');
 
 describe('GoogleAnalyticsStore', function() {
-  GoogleAnalyticsStore.ga = sinon.spy();
-
-  GoogleAnalyticsStore.basket = I.fromJS({
-    'Laser Sight': { name: 'Laser Sight', price: B(34.28), quantity: B(2) },
-    'Bayonet': { name: 'Bayonet', price: B(8.75), quantity: B(1) }
-  });
-
-  GoogleAnalyticsStore.delivery = I.fromJS({ name: 'UPS Extra', amount: B(4.50) });
-
-  GoogleAnalyticsStore.order = I.fromJS({
-    totals: { price: B(77.31), order: B(81.81) },
-    delivery: 'UPS Extra',
-    errors: [],
-    adjustments: [{ label: 'UPS Extra', amount: B(4.50) }]
+  before(function() {
+    s.ga = sinon.spy();
+    s.delivery = I({ name: 'UPS Extra', amount: 4.50 });
+    s.basket = I({
+      'Laser Sight': { name: 'Laser Sight', price: 34.28, quantity: 2 },
+      'Bayonet': { name: 'Bayonet', price: 8.75, quantity: 1 }
+    });
+    s.order = I({
+      totals: { price: 77.31, order: 81.81 },
+      delivery: 'UPS Extra',
+      errors: [],
+      adjustments: [{ label: 'UPS Extra', amount: 4.50 }]
+    });
   });
 
   it('adds basket and purchase action on completion', function() {
-    GoogleAnalyticsStore.onSetTrackingId({ id: 'UA-62379004-1' });
-    GoogleAnalyticsStore.onCompleted({ number: 'FHRUDH458DU' });
+    s.onSetTrackingId({ id: 'UA-62379004-1' });
+    s.onCompleted({ number: 'FHRUDH458DU' });
     var expected = [
       ['create', 'UA-62379004-1', 'auto'],
       ['require', 'ec'],
@@ -44,6 +43,6 @@ describe('GoogleAnalyticsStore', function() {
       }],
       ['send', 'pageview' ]
     ]
-    assert.deepEqual(GoogleAnalyticsStore.ga.args, expected);
+    assert.deepEqual(s.ga.args, expected);
   });
 });

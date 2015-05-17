@@ -43,8 +43,8 @@ var GoogleAnalyticsStore = Reflux.createStore({
     t.addBasket();
     t.ga('ec:setAction', 'purchase', {
       'id': args.number,
-      'revenue': t.order.getIn(['totals', 'order']).toString(),
-      'shipping': t.delivery.get('amount').toString()
+      'revenue': t.order.totals.order.toString(),
+      'shipping': t.delivery.amount.toString()
     });
     t.ga('send', 'pageview');
   },
@@ -52,13 +52,13 @@ var GoogleAnalyticsStore = Reflux.createStore({
   // Private
   ga: require('ga-browser')(),
   addBasket: function() {
-    t.basket.forEach(function(item, name) {
+    for(var name in t.basket) {
       t.ga('ec:addProduct', {
         'name': name,
-        'price': item.get('price').toString(),
-        'quantity': item.get('quantity').toString()
+        'price': t.basket[name].price.toString(),
+        'quantity': t.basket[name].quantity.toString()
       });
-    });
+    };
   }
 });
 
